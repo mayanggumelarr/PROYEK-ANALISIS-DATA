@@ -1,5 +1,11 @@
 Hasil Exploratory Data Analysis:
 - Tahun kedua menghasilkan perentalan lebih banyak dibandingkan tahun pertama
+
 Question 1 (Trend perentalan perbulan:)
 - Tahun pertama:
-
+Perentalan terminim di awal tahun, mulai meningkat di pertengahan tahun, dan kembali menurun hingga akhir tahun.
+- Tahun kedua:
+Perentalan meningkat dri tahun sebelumnya, Terbukti di:
+bulan 12 th 1 = 87323
+bulan 1 th 2 = 96744
+Perentalan terus meningkat hingga bulan ke-9 (218573) dan kembali menurun dari bulan ke-10 sampai 12.
