@@ -1,0 +1,5 @@
+Hasil Exploratory Data Analysis:
+- Tahun kedua menghasilkan perentalan lebih banyak dibandingkan tahun pertama
+Question 1 (Trend perentalan perbulan:)
+- Tahun pertama:
+
