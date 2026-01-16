@@ -24,3 +24,11 @@ Perentalan max-min berdasarkan musim:
 2 = Mist + Cloudy, Mist + Broken clouds, Mist + Few clouds, Mist
 4 = Heavy Rain + Ice Pallets + Thunderstorm + Mist, Snow + Fog
 1 = Clear, Few clouds, Partly cloudy, Partly cloudy
+
+Question 4 (Jam-jam perentalan paling ramai dan paling sepi):
+- Jam2 perentalan paling ramai adalah: 17, 18, 8, 16, 19 (descending)
+- Jam2 perentalan paling sepi: 4, 3, 5, 2, 1 (ascending)
+Insight lain:
+- Perentalan paling sedikit di jam 4 pagi, lalu terus meningkat hingga jam 8 pagi. Naik turun tapi tetap tinggi
+  hingga jam 15 sore. 
+- Peerentalan semakin meningkat dari jam 16 dan puncaknya jam 17, lalu menurun lagi hingga tengah malam.
