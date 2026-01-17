@@ -32,3 +32,21 @@ Insight lain:
 - Perentalan paling sedikit di jam 4 pagi, lalu terus meningkat hingga jam 8 pagi. Naik turun tapi tetap tinggi
   hingga jam 15 sore. 
 - Peerentalan semakin meningkat dari jam 16 dan puncaknya jam 17, lalu menurun lagi hingga tengah malam.
+
+ADDITIONAL ANALISIS
+
+Analisis dengan Asumsi Harga Sewa
+- Casual = $3/jam
+- Registered = $5/jam
+
+1. Tahun pertama
+Linear dengan jumlah pe-rental, tahun pertama memiliki revenue yang rendah di awal tahun, meningkat pesat hingga bulan ke 7
+dan mulai menurun hingga akhir tahun
+
+2. Tahun kedua
+Berbeda dengan tahun pertama, tahun kedua diawali dengan jumlah revenue lebih tinggi, lalu melonjak ekstrim di bulan ke-3,
+terus meningkat hingga bulan ke 9, dan mulai menurun hingga akhir tahun.
+
+Kesimpulan:
+Berdasarkan pola yang ditangkap, perentalan akan sedikit berkurang di awal tahun, lalu meningkat hingga pertengahan tahun. Puncaknya di bulan 8/9
+Lalu kembali turun saat akhir tahun.
