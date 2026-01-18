@@ -141,6 +141,7 @@ with col4:
     st.metric("Total Revenue ($)", value=total_revenue)
 
 fig, ax = plt.subplots(figsize=(16,8))
+
 ax.plot(
     daily_rent_df["dteday"],
     daily_rent_df["bike_rent"],
@@ -203,19 +204,25 @@ byseason_rent_df["season_type"] = pd.Categorical(
     ordered=True
 )
 
-fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(35, 15))
+fig, ax = plt.subplots(figsize=(18, 8))
 colors = ["#C8C7C7", "#807E7E", "#4F4F4F", "#A5A2A2"]
 
-sns.barplot(
-    x="bike_rent",
-    y="season_type",
-    data=byseason_rent_df,
-    palette=colors,
-    ax=ax
+# sns.barplot(
+#     x="bike_rent",
+#     y="season_type",
+#     data=byseason_rent_df,
+#     palette=colors,
+#     ax=ax
+# )
+
+ax.barh(
+    byseason_rent_df["season_type"],
+    byseason_rent_df["bike_rent"],
+    color=colors
 )
 
 ax.set_xlabel("Number of Rentals", fontsize=30)
-ax.set_ylabel("")
+ax.set_ylabel("Season", fontsize=30)
 ax.set_title("Bike Rentals by Season Type", fontsize=50)
 ax.tick_params(axis='y', labelsize=35)
 ax.tick_params(axis='x', labelsize=30)
@@ -226,3 +233,26 @@ for container in ax.containers:
 st.pyplot(fig)
 
 # =========================== Jam Perentalan Paling Ramai ke Sepi 
+st.subheader("Bike Rent by Hours")
+st.text("Perentalan Berdasarkan Jam")
+
+fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(35, 15))
+
+ax.bar(
+    byhour_rent_df["hr"],
+    byhour_rent_df["bike_rent"],
+    color="#4F4F4F"
+)
+
+ax.set_xlabel("Hours", fontsize=30)
+ax.set_ylabel("Count Rent", fontsize=30)
+ax.set_title("Bike Rentals by Hours", fontsize=50)
+ax.tick_params(axis='y', labelsize=35)
+ax.tick_params(axis='x', labelsize=30)
+
+for container in ax.containers:
+    ax.bar_label(container, fmt="%.0f", fontsize=28, padding=10)
+
+st.pyplot(fig)
+
+st.caption('Copyright (c) W.D.C Rent 2025')
