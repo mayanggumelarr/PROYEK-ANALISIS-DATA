@@ -80,3 +80,34 @@ hourly_data.reset_index(inplace=True)
 for column in datetime_columns:
     daily_data[column] = pd.to_datetime(daily_data[column])
     hourly_data[column] = pd.to_datetime(hourly_data[column])
+
+# ===================== KOLOM FILTER ===================================
+## WIDGET DATE INPUT SEBAGAI FILTER dg SIDEBAR
+
+min_date = daily_data['dteday'].min()
+max_date = daily_data['dteday'].max()
+
+with st.sidebar:
+    st.title("Welcome to this Dashboard")
+
+    # logo
+    st.image("logo.png")
+
+    st.text("Silahkan masukkan range tanggal untuk filter dahsboard")
+
+    # ambil start_date & end_date dr inputan
+    start_date, end_date = st.date_input(
+        label='Rentang Waktu', min_value=min_date,
+        max_value=max_date,
+        value=[min_date, max_date]
+    )
+
+# data yang diambil adalah data yang masuk ke dalam range min max
+main_df1 = daily_data[(daily_data["dteday"] >= str(start_date)) & (daily_data["dteday"] <= str(end_date))]
+main_df2 = hourly_data[(hourly_data["dteday"] >= str(start_date)) & (hourly_data["dteday"] <= str(end_date))]
+
+# used all helper function
+daily_rent_df = create_dailiy_rent(main_df1)
+byweek_rent_df = create_byweek(main_df1)
+byseason_rent_df = create_byseason(main_df1)
+byhour_rent_df = create_byhours(main_df2)
