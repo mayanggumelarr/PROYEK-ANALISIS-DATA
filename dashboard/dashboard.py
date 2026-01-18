@@ -6,7 +6,7 @@ from babel.numbers import format_currency
 
 
 # ================== Rental Harian =====
-def create_dailiy_rent(df):
+def create_daily_rent(df):
     daily_rent = df.resample(rule='D', on ='dteday').agg({
         'casual':'sum',
         'registered':'sum',
@@ -75,15 +75,14 @@ daily_data = pd.read_csv("../dataset/day_data_with_price.csv")
 hourly_data = pd.read_csv("../dataset/hours_data_with_price.csv")
 
 # ===================== Urutkan Berdasarkan dteday terbaru ===
-datetime_columns = ['dteday']
+# datetime_columns = ['dteday']
 daily_data.sort_values(by='dteday', inplace=True)
 hourly_data.sort_values(by='dteday', inplace=True)
-daily_data.reset_index(inplace=True)
-hourly_data.reset_index(inplace=True)
+daily_data.reset_index(drop=True, inplace=True)
+hourly_data.reset_index(drop=True, inplace=True)
 
-for column in datetime_columns:
-    daily_data[column] = pd.to_datetime(daily_data[column])
-    hourly_data[column] = pd.to_datetime(hourly_data[column])
+daily_data["dteday"] = pd.to_datetime(daily_data["dteday"])
+hourly_data["dteday"] = pd.to_datetime(hourly_data["dteday"])
 
 # ===================== KOLOM FILTER ===================================
 ## WIDGET DATE INPUT SEBAGAI FILTER dg SIDEBAR
@@ -107,11 +106,18 @@ with st.sidebar:
     )
 
 # data yang diambil adalah data yang masuk ke dalam range min max
-main_df1 = daily_data[(daily_data["dteday"] >= str(start_date)) & (daily_data["dteday"] <= str(end_date))]
-main_df2 = hourly_data[(hourly_data["dteday"] >= str(start_date)) & (hourly_data["dteday"] <= str(end_date))]
+# Ubah filter menjadi seperti ini:
+main_df1 = daily_data[(daily_data["dteday"] >= pd.to_datetime(start_date)) & 
+                      (daily_data["dteday"] <= pd.to_datetime(end_date))]
+
+mask = hourly_data["dteday"].between(
+    pd.to_datetime(start_date),
+    pd.to_datetime(end_date)
+)
+main_df2 = hourly_data[mask]
 
 # used all helper function
-daily_rent_df = create_dailiy_rent(main_df1)
+daily_rent_df = create_daily_rent(main_df1)
 byweek_rent_df = create_byweek(main_df1)
 byseason_rent_df = create_byseason(main_df1)
 byhour_rent_df = create_byhours(main_df2)
@@ -187,7 +193,7 @@ ax.axis("equal")
 
 st.pyplot(fig)
 
-# ======================== Perentalan berdasarkan Musim
+# ======================== Perentalan berdasarkan Musim/Cuaca
 st.subheader("Bike Rent by Seasons")
 st.text("Perentalan Sepeda berdasarkan Musim")
 
@@ -206,14 +212,6 @@ byseason_rent_df["season_type"] = pd.Categorical(
 
 fig, ax = plt.subplots(figsize=(18, 8))
 colors = ["#C8C7C7", "#807E7E", "#4F4F4F", "#A5A2A2"]
-
-# sns.barplot(
-#     x="bike_rent",
-#     y="season_type",
-#     data=byseason_rent_df,
-#     palette=colors,
-#     ax=ax
-# )
 
 ax.barh(
     byseason_rent_df["season_type"],
@@ -234,24 +232,27 @@ st.pyplot(fig)
 
 # =========================== Jam Perentalan Paling Ramai ke Sepi 
 st.subheader("Bike Rent by Hours")
-st.text("Perentalan Berdasarkan Jam")
+st.text("Perentalan Berdasarkan Jam (0-23)")
 
-fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(35, 15))
+byhour_rent_df = byhour_rent_df.sort_values(by="hr") 
+
+fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(20, 10)) # Ukuran disesuaikan agar tidak terlalu besar
 
 ax.bar(
-    byhour_rent_df["hr"],
+    byhour_rent_df["hr"],     
     byhour_rent_df["bike_rent"],
     color="#4F4F4F"
 )
 
-ax.set_xlabel("Hours", fontsize=30)
-ax.set_ylabel("Count Rent", fontsize=30)
-ax.set_title("Bike Rentals by Hours", fontsize=50)
-ax.tick_params(axis='y', labelsize=35)
-ax.tick_params(axis='x', labelsize=30)
+ax.set_xlabel("Hours (24-hour format)", fontsize=20)
+ax.set_ylabel("Total Rentals", fontsize=20)
+ax.set_title("Hourly Bike Rental Trend", fontsize=30)
+ax.set_xticks(range(0, 24))
+ax.tick_params(axis='y', labelsize=15)
+ax.tick_params(axis='x', labelsize=15)
 
 for container in ax.containers:
-    ax.bar_label(container, fmt="%.0f", fontsize=28, padding=10)
+    ax.bar_label(container, fmt="%.0f", fontsize=12, padding=3)
 
 st.pyplot(fig)
 
