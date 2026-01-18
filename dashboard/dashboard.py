@@ -71,8 +71,8 @@ def create_byhours(df):
 
     return byhours_rent
 
-daily_data = pd.read_csv("../dataset/day_data_with_price.csv")
-hourly_data = pd.read_csv("../dataset/hours_data_with_price.csv")
+daily_data = pd.read_csv("day_data_with_price.csv")
+hourly_data = pd.read_csv("hours_data_with_price.csv")
 
 # ===================== Urutkan Berdasarkan dteday terbaru ===
 # datetime_columns = ['dteday']
