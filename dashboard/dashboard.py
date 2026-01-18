@@ -236,7 +236,7 @@ st.text("Perentalan Berdasarkan Jam (0-23)")
 
 byhour_rent_df = byhour_rent_df.sort_values(by="hr") 
 
-fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(20, 10)) # Ukuran disesuaikan agar tidak terlalu besar
+fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(20, 10)) 
 
 ax.bar(
     byhour_rent_df["hr"],     
