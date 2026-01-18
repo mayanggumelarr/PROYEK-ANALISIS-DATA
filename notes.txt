@@ -1,3 +1,9 @@
+Question:
+1. Bagaimana trend perentalan sepeda bulanan selama periode analisis jika dilihat dari casual maupun registered?
+2. Bagaimana perbandingan peminjaman sepeda jika dilihat dari sisi weekend dan weekday? Mana yang lebih tinggi?
+3. Berdasarkan perbedaan musim/cuaca, musim/cuaca mana yang paling menghasilkan peminjaman tertinggi dan terendah?
+4. Di jam-jam berapakah peminjaman sepeda meningkat dan menurun?
+
 Hasil Exploratory Data Analysis:
 - Tahun kedua menghasilkan perentalan lebih banyak dibandingkan tahun pertama
 
