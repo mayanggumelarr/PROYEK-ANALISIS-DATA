@@ -94,7 +94,7 @@ with st.sidebar:
     st.title("Welcome to this Dashboard")
 
     # logo
-    st.image("logo.png")
+    st.image("dashboard/logo.png")
 
     st.text("Silahkan masukkan range tanggal untuk filter dahsboard")
 
