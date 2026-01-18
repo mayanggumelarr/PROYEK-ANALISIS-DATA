@@ -111,3 +111,69 @@ daily_rent_df = create_dailiy_rent(main_df1)
 byweek_rent_df = create_byweek(main_df1)
 byseason_rent_df = create_byseason(main_df1)
 byhour_rent_df = create_byhours(main_df2)
+
+# =========================================== MAIN CONTENT ========================================================
+st.header("W.D.C Bike Rent Dashboard :bike:")
+
+## ================= Total Rent dan Revenue
+st.subheader("Daily Rent")
+
+col1, col2 = st.columns(2)
+
+with col1:
+    total_rent = daily_rent_df.bike_rent.sum()
+    st.metric("Total Rents", value=total_rent)
+
+with col2:
+    total_revenue = daily_rent_df.revenue.sum()
+    st.metric("Total Revenue ($)", value=total_revenue)
+
+fig, ax = plt.subplots(figsize=(16,8))
+ax.plot(
+    daily_rent_df["dteday"],
+    daily_rent_df["bike_rent"],
+    marker='o', 
+    linewidth=2,
+    color="#4F4F4F"
+)
+ax.tick_params(axis='y', labelsize=20)
+ax.tick_params(axis='x', labelsize=15)
+    
+st.pyplot(fig)
+
+# ===================== Perentalan berdasarkan Weekday/Weekend
+st.subheader("Weekday/Weekend Rent")
+st.text("Perentalan Sepeda berdasarkan Tipe Hari (Weekday atau Weekend)")
+
+byweek_rent_df["day_type"] = byweek_rent_df["workingday"].map({
+    1: "Weekday",
+    0: "Weekend"
+})
+
+byweek_rent_df["day_type"] = pd.Categorical(
+    byweek_rent_df["day_type"],
+    categories=["Weekday", "Weekend"],
+    ordered=True
+)
+
+fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(35, 15))
+colors = ["#4F4F4F", "#A19E9E"]
+
+sns.barplot(
+    x="bike_rent",
+    y="day_type",
+    data=byweek_rent_df,
+    palette=colors,
+    ax=ax
+)
+
+ax.set_xlabel("Number of Rentals", fontsize=30)
+ax.set_ylabel("")
+ax.set_title("Bike Rentals by Day Type", fontsize=50)
+ax.tick_params(axis='y', labelsize=35)
+ax.tick_params(axis='x', labelsize=30)
+
+for container in ax.containers:
+    ax.bar_label(container, fmt="%.0f", fontsize=28, padding=10)
+
+st.pyplot(fig)
