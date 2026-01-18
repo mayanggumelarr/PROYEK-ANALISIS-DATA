@@ -141,7 +141,7 @@ ax.tick_params(axis='x', labelsize=15)
     
 st.pyplot(fig)
 
-# ===================== Perentalan berdasarkan Weekday/Weekend
+# # ===================== Perentalan berdasarkan Weekday/Weekend
 st.subheader("Weekday/Weekend Rent")
 st.text("Perentalan Sepeda berdasarkan Tipe Hari (Weekday atau Weekend)")
 
@@ -150,26 +150,60 @@ byweek_rent_df["day_type"] = byweek_rent_df["workingday"].map({
     0: "Weekend"
 })
 
-byweek_rent_df["day_type"] = pd.Categorical(
-    byweek_rent_df["day_type"],
-    categories=["Weekday", "Weekend"],
+pie_df = byweek_rent_df.groupby("day_type", observed=True)["bike_rent"].sum()
+fig, ax = plt.subplots(figsize=(18, 12))
+colors = ["#4F4F4F", "#A19E9E"]
+
+labels = [
+    f"{label}\n({value:,})"
+    for label, value in zip(pie_df.index, pie_df.values)
+]
+
+ax.pie(
+    pie_df,
+    labels=labels,
+    autopct="%1.1f%%",
+    startangle=90,
+    colors=colors,
+    textprops={"fontsize": 28}
+)
+
+ax.set_title("Proportion of Bike Rentals: Weekday vs Weekend", fontsize=40)
+ax.axis("equal")
+
+st.pyplot(fig)
+
+# ======================== Perentalan berdasarkan Musim
+st.subheader("Bike Rent by Seasons")
+st.text("Perentalan Sepeda berdasarkan Musim")
+
+byseason_rent_df["season_type"] = byseason_rent_df["season"].map({
+    1: "Partly Cloudly",
+    2: "Mist Cloudly",
+    3: "Light",
+    4: "Heavy Rain"
+})
+
+byseason_rent_df["season_type"] = pd.Categorical(
+    byseason_rent_df["season_type"],
+    categories=["Partly Cloudly", "Mist Cloudly", "Light", "Heavy Rain"],
     ordered=True
 )
 
 fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(35, 15))
-colors = ["#4F4F4F", "#A19E9E"]
+colors = ["#C8C7C7", "#807E7E", "#4F4F4F", "#A5A2A2"]
 
 sns.barplot(
     x="bike_rent",
-    y="day_type",
-    data=byweek_rent_df,
+    y="season_type",
+    data=byseason_rent_df,
     palette=colors,
     ax=ax
 )
 
 ax.set_xlabel("Number of Rentals", fontsize=30)
 ax.set_ylabel("")
-ax.set_title("Bike Rentals by Day Type", fontsize=50)
+ax.set_title("Bike Rentals by Season Type", fontsize=50)
 ax.tick_params(axis='y', labelsize=35)
 ax.tick_params(axis='x', labelsize=30)
 
