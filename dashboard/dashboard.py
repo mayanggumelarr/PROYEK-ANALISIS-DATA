@@ -8,12 +8,16 @@ from babel.numbers import format_currency
 # ================== Rental Harian =====
 def create_dailiy_rent(df):
     daily_rent = df.resample(rule='D', on ='dteday').agg({
+        'casual':'sum',
+        'registered':'sum',
         'cnt':'sum',
         'totalPrice':'sum'
     }).reset_index()
 
     daily_rent.rename(columns={
-        "cnt":'bike_rent',
+        "casual":"casual_rent",
+        "registered":"member_rent",
+        "cnt":"bike_rent",
         "totalPrice":"revenue"
     }, inplace=True)
 
@@ -118,13 +122,21 @@ st.header("W.D.C Bike Rent Dashboard :bike:")
 ## ================= Total Rent dan Revenue
 st.subheader("Daily Rent")
 
-col1, col2 = st.columns(2)
+col1, col2, col3, col4 = st.columns(4)
 
 with col1:
     total_rent = daily_rent_df.bike_rent.sum()
     st.metric("Total Rents", value=total_rent)
 
 with col2:
+    casual_rent = daily_rent_df.casual_rent.sum()
+    st.metric("Casual Rents", value=casual_rent)
+
+with col3:
+    member_rent = daily_rent_df.member_rent.sum()
+    st.metric("Member Rents", value=member_rent)
+
+with col4:
     total_revenue = daily_rent_df.revenue.sum()
     st.metric("Total Revenue ($)", value=total_revenue)
 
@@ -136,6 +148,7 @@ ax.plot(
     linewidth=2,
     color="#4F4F4F"
 )
+ax.set_title("Bike Rent Revenue ($)", fontsize=40)
 ax.tick_params(axis='y', labelsize=20)
 ax.tick_params(axis='x', labelsize=15)
     
@@ -211,3 +224,5 @@ for container in ax.containers:
     ax.bar_label(container, fmt="%.0f", fontsize=28, padding=10)
 
 st.pyplot(fig)
+
+# =========================== Jam Perentalan Paling Ramai ke Sepi 
