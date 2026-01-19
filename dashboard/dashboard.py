@@ -195,7 +195,7 @@ ax.bar(
 ax.set_xlabel("Month", fontsize=20)
 ax.set_ylabel("Total Rentals", fontsize=20)
 ax.set_title("Monthly Bike Rental Trend", fontsize=30)
-ax.set_xticks(range(0, 12))
+ax.set_xticks(range(0, 13))
 ax.tick_params(axis='y', labelsize=15)
 ax.tick_params(axis='x', labelsize=15)
 
