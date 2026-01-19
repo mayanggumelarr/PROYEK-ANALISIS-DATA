@@ -211,7 +211,7 @@ byseason_rent_df["season_type"] = pd.Categorical(
 )
 
 fig, ax = plt.subplots(figsize=(18, 8))
-colors = ["#7E80FB", "#373AFF", "#0004EE", "#5B5EFF"]
+colors = ["#A3A5F9", "#373AFF", "#0104BE", "#5B5EFF"]
 
 ax.barh(
     byseason_rent_df["season_type"],
