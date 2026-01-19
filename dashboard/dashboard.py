@@ -153,7 +153,7 @@ ax.plot(
     daily_rent_df["bike_rent"],
     marker='o', 
     linewidth=2,
-    color="#4F4F4F"
+    color="#FFA200"
 )
 ax.set_title("Bike Rent Revenue ($)", fontsize=40)
 ax.tick_params(axis='y', labelsize=20)
@@ -172,7 +172,7 @@ byweek_rent_df["day_type"] = byweek_rent_df["workingday"].map({
 
 pie_df = byweek_rent_df.groupby("day_type", observed=True)["bike_rent"].sum()
 fig, ax = plt.subplots(figsize=(18, 12))
-colors = ["#4F4F4F", "#A19E9E"]
+colors = ["#FFA200", "#0004FF"]
 
 labels = [
     f"{label}\n({value:,})"
@@ -211,7 +211,7 @@ byseason_rent_df["season_type"] = pd.Categorical(
 )
 
 fig, ax = plt.subplots(figsize=(18, 8))
-colors = ["#C8C7C7", "#807E7E", "#4F4F4F", "#A5A2A2"]
+colors = ["#7E80FB", "#373AFF", "#0004EE", "#5B5EFF"]
 
 ax.barh(
     byseason_rent_df["season_type"],
@@ -241,7 +241,7 @@ fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(20, 10))
 ax.bar(
     byhour_rent_df["hr"],     
     byhour_rent_df["bike_rent"],
-    color="#4F4F4F"
+    color="#FFA200"
 )
 
 ax.set_xlabel("Hours (24-hour format)", fontsize=20)
