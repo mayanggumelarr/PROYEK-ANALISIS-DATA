@@ -23,6 +23,22 @@ def create_daily_rent(df):
 
     return daily_rent
 
+# =================== Perentalan berdasarkan Bulan =====
+def create_bymonths(df):
+    bymonths_rent = df.groupby('mnth').agg({
+        'casual':'sum',
+        'registered':'sum',
+        'cnt':'sum'
+    }).reset_index()
+
+    bymonths_rent.rename(columns={
+        'casual':'casual_rent',
+        'registered':'member_rent',
+        'cnt':'bike_rent'
+    }, inplace=True)
+
+    return bymonths_rent
+
 # =================== Jumlah Rental berdasarkan Weekday/Weekend =====
 def create_byweek(df):
     byweek_rent = df.groupby("workingday").agg({
@@ -118,6 +134,7 @@ main_df2 = hourly_data[mask]
 
 # used all helper function
 daily_rent_df = create_daily_rent(main_df1)
+monthly_rent_df = create_bymonths(main_df1)
 byweek_rent_df = create_byweek(main_df1)
 byseason_rent_df = create_byseason(main_df1)
 byhour_rent_df = create_byhours(main_df2)
@@ -159,6 +176,32 @@ ax.set_title("Bike Rent Revenue ($)", fontsize=40)
 ax.tick_params(axis='y', labelsize=20)
 ax.tick_params(axis='x', labelsize=15)
     
+st.pyplot(fig)
+
+# =========================== Trend Perentalan Berdasakan Bulan 
+st.subheader("Bike Rent by Months")
+st.text("Perentalan Berdasarkan Bulan (1-12)")
+
+monthly_rent_df = monthly_rent_df.sort_values(by="mnth") 
+
+fig, ax = plt.subplots(nrows=1, ncols=1, figsize=(20, 10)) 
+
+ax.bar(
+    monthly_rent_df["mnth"],     
+    monthly_rent_df["bike_rent"],
+    color="#FFA200"
+)
+
+ax.set_xlabel("Month", fontsize=20)
+ax.set_ylabel("Total Rentals", fontsize=20)
+ax.set_title("Monthly Bike Rental Trend", fontsize=30)
+ax.set_xticks(range(0, 12))
+ax.tick_params(axis='y', labelsize=15)
+ax.tick_params(axis='x', labelsize=15)
+
+for container in ax.containers:
+    ax.bar_label(container, fmt="%.0f", fontsize=12, padding=3)
+
 st.pyplot(fig)
 
 # # ===================== Perentalan berdasarkan Weekday/Weekend
